@@ -19,7 +19,71 @@ In settings (per chain) you configure two RPC lists:
   - Used for broadcasting signed transactions (`sendRawTransaction`)
   - Broadcast is done in parallel (“race”): first success wins
 
-## 2. What Anti‑MEV Means Here
+Quick intuition:
+
+- `RPC URLs` are for reads; you can keep more of them (2–6) for stability
+- `Protected RPC URLs` are for sending transactions; keep a small, high-quality set (usually 3–4). Since they only carry broadcast traffic, free plans are often enough
+
+## 2. Protect RPC (Privacy Nodes) Guide
+
+### 2.1 Why Protect RPC
+
+Switching broadcast traffic from public RPCs to Protect RPC endpoints usually improves:
+
+- Rate-limit resilience: public RPCs often throttle during peak hours
+- Observability risk: public endpoints are easier to monitor and correlate
+- Delivery probability: multiple Protect endpoints race the same signed tx
+
+### 2.2 Where to Configure
+
+In Popup → Settings → Network:
+
+- `RPC URLs`: one per line, used for reads/quotes
+- `Protected RPC URLs`: one per line, used for broadcasting (recommended 3–4, mix providers)
+- `Anti‑MEV`: recommended on (broadcasting uses Protected list when enabled)
+
+### 2.3 Selection & Quantity Recommendations
+
+- Region: prefer endpoints close to your network egress (e.g., if you use a Singapore VPN, prioritize SG; add 1 HK as fallback if needed)
+- Mix: 1 stable “tier-1” provider + 1 trading-oriented node + 1–2 paid multi-region nodes
+- Count: 3–4 is enough; too many endpoints can trigger throttling and increases maintenance
+- Plan: if you only use Protect RPC for broadcasting, you usually don’t need a high-tier plan (unless you do very high-frequency automation)
+
+### 2.4 Recommended Providers (Template)
+
+Copy the template below and replace `YOUR_KEY` / `YOUR_TOKEN` with values from your provider console. Never commit real keys to git or share screenshots publicly.
+
+Primary (at least 2):
+
+- NodeReal (SG/HK, stable baseline)
+  - `https://bsc-mainnet.nodereal.io/v1/YOUR_KEY`
+- Chainstack (SG/HK if available, stable and good redundancy)
+  - `https://bsc-mainnet.core.chainstack.com/YOUR_KEY` (format may differ; follow the console)
+
+Extra (add 1–2):
+
+- Blockrazor (trading-oriented; better as a supplement than the only dependency)
+  - `https://bsc.blockrazor.xyz/YOUR_KEY`
+- GetBlock (multi-region; good as an extra)
+  - `https://go.getblock.io/YOUR_KEY`
+
+Example Protected RPC list (4 lines):
+
+```
+https://bsc-mainnet.nodereal.io/v1/YOUR_KEY
+https://bsc-mainnet.core.chainstack.com/YOUR_KEY
+https://bsc.blockrazor.xyz/YOUR_KEY
+https://go.getblock.io/YOUR_KEY
+```
+
+### 2.5 Application & Troubleshooting Tips
+
+- When creating endpoints, choose “BSC Mainnet / HTTPS”, and check if it requires extra auth headers or IP whitelisting
+- After configuring, use the floating panel’s RPC latency test and remove unstable endpoints
+- If you see `No RPC URLs configured (check Anti-MEV settings)`, verify Protected RPC URLs is not empty and URLs are correct
+- If privacy matters, prefer trusted providers or self-hosted nodes; avoid unknown endpoints for broadcasting
+
+## 3. What Anti‑MEV Means Here
 
 In the current implementation, broadcasting depends on `Protected RPC URLs`:
 
@@ -31,7 +95,7 @@ Practical recommendation:
 - Keep Anti‑MEV enabled and configure at least 1 working Protected RPC URL
 - Still configure 2–4 stable RPC URLs for reading and quoting
 
-## 3. Multi-Endpoint Racing (Higher Chance to Reach Mempool Fast)
+## 4. Multi-Endpoint Racing (Higher Chance to Reach Mempool Fast)
 
 When broadcasting, Dagobang sends your signed transaction concurrently to:
 
@@ -45,7 +109,7 @@ Common behaviors:
 - If an endpoint replies `already known / already imported`, the tx hash is derived from `keccak(signedTx)` and treated as success
 - If one endpoint times out, others can still succeed
 
-## 4. bloXroute Private Broadcast (Optional)
+## 5. bloXroute Private Broadcast (Optional)
 
 If you set `bloxrouteAuthHeader` in settings (the value used as the HTTP `Authorization` header):
 
@@ -57,14 +121,14 @@ Notes:
 - Without auth header, bloXroute is not used
 - bloXroute and RPC broadcasting are parallel; whichever succeeds first is returned
 
-## 5. Latency Testing & Maintenance
+## 6. Latency Testing & Maintenance
 
 The floating panel’s RPC panel can measure latency of RPC URLs / Protected RPC URLs (via `getBlockNumber`):
 
 - Lower and more stable latency endpoints are better candidates for the Protected list
 - Keep multiple read RPC URLs to reduce single-point failures
 
-## 6. Common Issues
+## 7. Common Issues
 
 - `No RPC URLs configured (check Anti-MEV settings)`:
   - Check if Protected RPC URLs is empty in Popup → Settings
@@ -78,4 +142,3 @@ Next:
 
 - For wallet/gas/slippage/scan interval management: see [Popup Guide](popup.md)
 - For automation strategy details: see [Limit Orders & Advanced Auto-Sell](automation.md)
-
