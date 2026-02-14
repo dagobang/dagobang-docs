@@ -2,24 +2,25 @@
 
 打狗棒（Dagobang）是一款面向 Meme 交易的非托管浏览器插件。它以悬浮窗的方式把交易面板叠加到你正在使用的看盘/挂单页面上，让你无需切换页面即可完成链上交易，并通过静默签名与多节点广播提升高频交易的执行效率。
 
+<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+
 ## 核心特点
 
-- 低费率：冷启动 0%，未来计划 ≤ 0.1% 上限（以上线配置为准）
-- 非托管：私钥/助记词仅本地加密存储，不上传，不托管资金
-- 悬浮窗交易：在 Fourmeme / GMGN / Axiom 等页面直接操作
-- 限价挂单与自动触发：买入/卖出到价自动执行并记录结果
-- 高级自动卖出：多档止盈/止损与可选跟踪止损（Trailing Stop）
-- 隐私与执行：支持 Protect RPC、Anti-MEV、多节点竞速广播与可选 bloXroute 私有广播
+* 低费率：冷启动 0%，未来计划 ≤ 0.1% 上限（以上线配置为准）
+* 非托管：私钥/助记词仅本地加密存储，不上传，不托管资金
+* 悬浮窗交易：在 Fourmeme / GMGN / Axiom 等页面直接操作
+* 限价挂单与自动触发：买入/卖出到价自动执行并记录结果
+* 高级自动卖出：多档止盈/止损与可选跟踪止损（Trailing Stop）
+* 隐私与执行：支持 Protect RPC、Anti-MEV、多节点竞速广播与可选 bloXroute 私有广播
 
 ## 阅读指南
 
-- 如果你是第一次安装：从 [安装与快速开始](getting-started.md) 开始
-- 如果你想先学会下单：看 [悬浮窗交易面板](floating-panel.md)
-- 如果你要做限价/自动化：看 [限价挂单与高级自动卖出](automation.md)
-- 如果你要配置 RPC 与防夹：看 [网络、广播与 Anti‑MEV](network-and-privacy.md)
-- 如果你要管理钱包/账户：看 [Popup（弹窗）使用指南](popup.md)
+* 如果你是第一次安装：从 [安装与快速开始](getting-started.md) 开始
+* 如果你想先学会下单：看 [悬浮窗交易面板](floating-panel.md)
+* 如果你要做限价/自动化：看 [限价挂单与高级自动卖出](automation.md)
+* 如果你要配置 RPC 与防夹：看 [网络、广播与 Anti‑MEV](network-and-privacy.md)
+* 如果你要管理钱包/账户：看 [Popup（弹窗）使用指南](popup.md)
 
 ## 安全与风险提示
 
 Meme 交易风险极高，可能导致部分或全部本金损失。打狗棒仅提供工具能力，不构成投资建议。更多说明见 [安全、隐私与免责声明](security-and-risks.md)。
-
