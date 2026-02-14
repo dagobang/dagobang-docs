@@ -1,0 +1,12 @@
+{
+  "name": "dagobang-docs",
+  "private": true,
+  "scripts": {
+    "build": "gitbook build",
+    "serve": "gitbook serve"
+  },
+  "dependencies": {
+    "@gitbook-ng/gitbook": "^3.3.6"
+  }
+}
+
