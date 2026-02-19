@@ -51,29 +51,32 @@
 
 ### 2.4 推荐 Protect RPC（示例模板）
 
-下面是“可照抄的模板”，把 `YOUR_KEY` / `YOUR_TOKEN` 替换成你自己控制台里生成的值即可。不要把真实 Key 写进仓库或截图公开。
+当前版本对 `Protected RPC URLs` 有白名单校验：仅支持以下 3 家隐私节点服务（其他域名会在保存时被自动忽略；若忽略后列表为空，Anti‑MEV 会自动关闭）：
 
-主力（建议至少 2 条）：
+- 48.club
+- Blockrazor
+- GetBlock
 
-- NodeReal（SG/HK，偏稳定托底）
-  - `https://bsc-mainnet.nodereal.io/v1/YOUR_KEY`
-- Chainstack（SG/HK（如可选），偏稳定，适合作为主力或强冗余）
-  - `https://bsc-mainnet.core.chainstack.com/YOUR_KEY`（示例格式，以控制台实际为准）
+推荐的配置（按用途分开填写）：
 
-补充（再加 1–2 条）：
-
-- Blockrazor（交易向节点，建议作为补充而不是唯一依赖）
-  - `https://bsc.blockrazor.xyz/YOUR_KEY`
-- GetBlock（可选区域，适合补充）
-  - `https://go.getblock.io/YOUR_KEY`
-
-一套可用的 Protected RPC 样例（4 条）：
+RPC URLs（读链/报价）：
 
 ```
-https://bsc-mainnet.nodereal.io/v1/YOUR_KEY
-https://bsc-mainnet.core.chainstack.com/YOUR_KEY
+https://1rpc.io/bnb
+https://bsc.rpc.blxrbdn.com
+https://bsc-dataseed.ninicoin.io
+https://bsc-dataseed.defibit.io
+https://bsc-dataseed-public.bnbchain.org
+```
+
+Protected RPC URLs（隐私广播/Anti‑MEV）：
+
+```
+https://bscrpc.pancakeswap.finance
+https://pancake.rpc.48.club
+https://four.rpc.48.club
 https://bsc.blockrazor.xyz/YOUR_KEY
-https://go.getblock.io/YOUR_KEY
+https://go.getblock.asia/YOUR_KEY
 ```
 
 ### 2.5 申请与排障建议
@@ -111,7 +114,7 @@ https://go.getblock.io/YOUR_KEY
 
 ## 5. bloXroute 私有广播（可选）
 
-你可以在 Settings 中填写 `bloxrouteAuthHeader`（形如 `Authorization: ...` 的值）。启用后：
+你可以在 Settings 中填写 `bloxrouteAuthHeader`（bloxrouter / bloXroute 的鉴权 Header，填写 HTTP `Authorization` 的值）。启用后：
 
 - 广播会额外并发向 bloXroute 的 `bsc_private_tx` 接口提交交易
 - 使用 `mev_builders: ["all"]`，尽可能覆盖更多 builder

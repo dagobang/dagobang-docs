@@ -51,29 +51,32 @@ In Popup → Settings → Network:
 
 ### 2.4 Recommended Providers (Template)
 
-Copy the template below and replace `YOUR_KEY` / `YOUR_TOKEN` with values from your provider console. Never commit real keys to git or share screenshots publicly.
+In the current version, `Protected RPC URLs` are validated with a whitelist. Only these privacy RPC providers are supported (other domains are ignored on save; if the list becomes empty after filtering, Anti‑MEV will be turned off automatically):
 
-Primary (at least 2):
+- 48.club
+- Blockrazor
+- GetBlock
 
-- NodeReal (SG/HK, stable baseline)
-  - `https://bsc-mainnet.nodereal.io/v1/YOUR_KEY`
-- Chainstack (SG/HK if available, stable and good redundancy)
-  - `https://bsc-mainnet.core.chainstack.com/YOUR_KEY` (format may differ; follow the console)
+Recommended setup (fill by purpose):
 
-Extra (add 1–2):
-
-- Blockrazor (trading-oriented; better as a supplement than the only dependency)
-  - `https://bsc.blockrazor.xyz/YOUR_KEY`
-- GetBlock (multi-region; good as an extra)
-  - `https://go.getblock.io/YOUR_KEY`
-
-Example Protected RPC list (4 lines):
+RPC URLs (reads/quotes):
 
 ```
-https://bsc-mainnet.nodereal.io/v1/YOUR_KEY
-https://bsc-mainnet.core.chainstack.com/YOUR_KEY
+https://1rpc.io/bnb
+https://bsc.rpc.blxrbdn.com
+https://bsc-dataseed.ninicoin.io
+https://bsc-dataseed.defibit.io
+https://bsc-dataseed-public.bnbchain.org
+```
+
+Protected RPC URLs (private broadcast / Anti‑MEV):
+
+```
+https://bscrpc.pancakeswap.finance
+https://pancake.rpc.48.club
+https://four.rpc.48.club
 https://bsc.blockrazor.xyz/YOUR_KEY
-https://go.getblock.io/YOUR_KEY
+https://go.getblock.asia/YOUR_KEY
 ```
 
 ### 2.5 Application & Troubleshooting Tips
@@ -111,7 +114,7 @@ Common behaviors:
 
 ## 5. bloXroute Private Broadcast (Optional)
 
-If you set `bloxrouteAuthHeader` in settings (the value used as the HTTP `Authorization` header):
+If you set `bloxrouteAuthHeader` in settings (bloxrouter / bloXroute auth; the value used as the HTTP `Authorization` header):
 
 - Broadcasting additionally submits the tx to bloXroute’s `bsc_private_tx` endpoint
 - Uses `mev_builders: ["all"]` to maximize builder coverage
